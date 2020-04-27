@@ -1,0 +1,41 @@
+{
+	"user_id": "",
+	"app_language": "en-US",
+	"languages": [{
+		"code": "en-US",
+		"hotkey": "alt + 1",
+		"hotword": "spotify",
+		"match_full_cmd": false,
+		"require_hotword_for_play": false,
+		"play_cmd": ["play"],
+		"stop_cmd": ["stop"],
+		"next_cmd": ["next", "skip"],
+		"previous_cmd": ["previous", "go back"],
+		"repeat_cmd": ["repeat"],
+		"artist_separators": ["by", "from", "of"],
+		"add_cmd": ["add"],
+		"random_cmd": ["random"],
+		"enable_cmd": ["enable", "enabled", "active"],
+		"disable_cmd": ["disable", "disabled", "inactive"]
+	}, {
+		"code": "pt-BR",
+		"hotkey": "alt + 2",
+		"hotword": "spotify",
+		"match_full_cmd": false,
+		"require_hotword_for_play": false,
+		"play_cmd": ["tocar", "toca"],
+		"stop_cmd": ["parar", "para"],
+		"next_cmd": ["próxima", "outra"],
+		"previous_cmd": ["anterior", "volta"],
+		"repeat_cmd": ["repetir", "repita"],
+		"artist_separators": ["da", "do", "por", "pelo", "pela"],
+		"add_cmd": ["adicionar", "adiciona"],
+		"random_cmd": ["aleatório"],
+		"enable_cmd": ["ligado", "ligada", "ativo", "ativa"],
+		"disable_cmd": ["desligado", "desligada", "inativo", "inativa"]
+	}],
+	"hotkeys": {
+		"toggle_languages": "alt + l",
+		"simulate_hotword": "alt + s"
+	}
+}

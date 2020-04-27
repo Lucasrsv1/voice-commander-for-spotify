@@ -1,0 +1,25 @@
+{
+	"name": "voice-commander-for-spotify",
+	"version": "0.0.1",
+	"description": "Control your Spotify using your voice and never again lose time looking up that song that you want to listen.",
+	"keywords": [
+		"spotify",
+		"voice-control",
+		"voice-recognition",
+		"voice-command",
+		"music",
+		"song",
+		"listen"
+	],
+	"author": "Lucas Rassilan Vilanova",
+	"license": "ISC",
+	"repository": {
+		"url": "git@bitbucket.org:lucasrsv1/voice-commander-for-spotify.git"
+	},
+	"scripts": {
+		"start": "echo \"Execute 'npm run api' para iniciar a API do servidor e 'npm run front' para iniciar o frontend",
+		"api": "cd backend && nodemon app.js",
+		"front": "cd voice-commander-for-spotify && ng serve --host 0.0.0.0 --open",
+		"postinstall": "cd backend && npm install && cd ../voice-commander-for-spotify && npm install"
+	}
+}
