@@ -1,0 +1,21 @@
+<header>
+	<nav class="navbar">
+		<span class="navbar-brand text-left d-none d-sm-block">Voice Commander for Spotify</span>
+
+		<img class="pull-left" src="assets/Logo.png"/>
+
+		<ul id="user-info" class="pull-right">
+			<li class="dropdown" dropdown dropdownToggle role="button" *ngIf="(user$ | async) as user; else login">
+				<a>{{ userName(user) }} <i class="fa fa-user-circle"></i></a>
+
+				<ul *dropdownMenu class="dropdown-menu">
+					<li (click)="logout()"><a><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+				</ul>
+			</li>
+
+			<ng-template #login>
+				<li><a [routerLink]="['login']">Fazer Login</a></li>
+			</ng-template>
+		</ul>
+	</nav>
+</header>

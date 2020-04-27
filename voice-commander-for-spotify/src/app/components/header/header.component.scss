@@ -1,0 +1,76 @@
+header {
+	box-shadow: 0px 3px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+nav {
+	background-color: #008C32;
+	line-height: 50px;
+	vertical-align: middle;
+	border-radius: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+img {
+	height: 65px;
+    object-fit: contain;
+}
+
+.navbar-brand {
+	font-size: 22px;
+	color: white;
+	width: 100%;
+	position: absolute;
+	padding-left: 80px;
+}
+
+#user-info {
+	font-size: 16px;
+	margin: 0;
+	padding-right: 7px;
+	position: relative;
+	z-index: 2;
+	list-style: none;
+}
+
+#user-info a {
+	line-height: 22px;
+	color: white;
+	vertical-align: middle;
+	font-family: "Roboto Light", "Roboto", Helvetica, Arial, sans-serif;
+}
+
+#user-info i {
+	font-size: 22px;
+	padding-left: 7px;
+}
+
+#user-info>li {
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+}
+
+ul.dropdown-menu {
+	background-color: #008C32;
+	margin: 0px;
+	padding: 0;
+	border-top: 0;
+	border-radius: 0;
+	border-bottom-left-radius: 5px;
+}
+
+ul.dropdown-menu>li:focus, ul.dropdown-menu>li:hover {
+	background-color: #007a2b;
+}
+
+ul.dropdown-menu>li>a {
+	padding-left: .5rem;
+}
+
+#user-info ul.dropdown-menu i {
+	font-size: 16px;
+}
+
+#user-info>li:hover, ul.dropdown-menu>li:hover {
+	cursor: pointer;
+}

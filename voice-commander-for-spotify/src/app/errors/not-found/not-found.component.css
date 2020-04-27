@@ -1,0 +1,4 @@
+div {
+	color: #007a2b;
+	margin-top: calc((100vh - 150px - 70px) / 2);
+}

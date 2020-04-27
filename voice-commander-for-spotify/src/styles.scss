@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+body {
+	margin: 0;
+	overflow-x: hidden;
+	font-family: "Roboto", Helvetica, Arial, sans-serif;
+	background-color: #F0F0F0;
+}
+
+.btn-primary {
+	background-color: #00A339;
+	border-color: #008C32;
+}
+
+.btn-primary:hover:not(:disabled):not(.disabled) {
+	background-color: #008C32;
+	border-color: #007a2b;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+	background-color: #007a2b;
+	border-color: #006624;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+	background-color: #00A339;
+	border-color: #008C32;
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    background-color: #00b33e;
+    border-color: #00A339;
+    box-shadow: 0 0 0 0.2rem rgba(0, 180, 60, 0.5);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 180, 60, 0.5);
+}
