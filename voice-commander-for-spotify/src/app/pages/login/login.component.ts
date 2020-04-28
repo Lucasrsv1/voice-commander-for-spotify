@@ -12,7 +12,9 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 export class LoginComponent implements OnInit {
 	public error: string;
 	public logout: boolean;
+	public loggingIn: boolean = false;
 	public sec: number = 6;
+
 	private destroyed: boolean = false;
 
 	constructor (
@@ -57,6 +59,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	login (): void {
+		this.loggingIn = true;
 		window.location.href = environment.apiURL + "/v1/login";
 	}
 }
