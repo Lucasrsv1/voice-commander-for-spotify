@@ -14,9 +14,9 @@
 		"repeat_cmd": ["repeat"],
 		"artist_separators": ["by", "from", "of"],
 		"add_cmd": ["add"],
-		"random_cmd": ["random"],
-		"enable_cmd": ["enable", "enabled", "active"],
-		"disable_cmd": ["disable", "disabled", "inactive"]
+		"random_cmd": ["random", "shuffle"],
+		"enable_cmd": ["enable", "enabled", "active", "on"],
+		"disable_cmd": ["disable", "disabled", "inactive", "off"]
 	}, {
 		"code": "pt-BR",
 		"hotkey": "alt + 2",

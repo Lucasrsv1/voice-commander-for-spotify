@@ -20,9 +20,14 @@
 	"dependencies": {
 		"body-parser": "^1.15.2",
 		"console-stamp": "~0.2.4",
+		"cookie-parser": "^1.4.5",
 		"cors": "^2.8.5",
 		"express": "^4.17.1",
-		"node-hotkeys": "github:Lucasrsv1/node-hotkeys"
+		"node-hotkeys": "github:Lucasrsv1/node-hotkeys",
+		"querystring": "^0.2.0",
+		"request": "^2.88.2",
+		"spotify-web-api-node": "^4.0.0",
+		"winston": "~2.3.0"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.3"

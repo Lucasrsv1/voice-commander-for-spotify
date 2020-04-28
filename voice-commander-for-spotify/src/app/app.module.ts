@@ -1,6 +1,7 @@
+import { NgModule } from '@angular/core';
+import { HttpClientModule} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
@@ -24,6 +25,7 @@ import { LoginComponent } from './pages/login/login.component';
 		ComponentsModule,
 		BsDropdownModule.forRoot(),
 		SweetAlert2Module.forRoot(),
+		HttpClientModule,
 		AppRoutingModule
 	],
 	providers: [],

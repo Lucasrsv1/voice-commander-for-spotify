@@ -1,1 +1,23 @@
-<p class="m-2">Login works!</p>
+<div class="container">
+	<div class="card">
+		<div class="card-header">Login</div>
+		<div class="card-body text-center">
+			<div *ngIf="!error && logout">
+				<h5 class="card-title">Successfully logged out</h5>
+				<p class="card-text">bye ;)</p>
+			</div>
+
+			<div *ngIf="!error && !logout">
+				<h5 class="card-title">Please, log in using the Spotify authentication page</h5>
+				<p class="card-text">Redirecting in {{ sec }} second{{ sec > 1 ? 's' : ''}}</p>
+			</div>
+
+			<div *ngIf="error">
+				<h5 class="card-title">There was an error during the authentication</h5>
+				<p class="card-text">Error: {{ error }}</p>
+			</div>
+
+			<a class="btn btn-primary mt-3" (click)="login()">Log in with Spotify</a>
+		</div>
+	</div>
+</div>
