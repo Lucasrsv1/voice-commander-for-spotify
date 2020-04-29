@@ -1,5 +1,4 @@
 {
-	"user_id": "",
 	"app_language": "en-US",
 	"languages": [{
 		"code": "en-US",
@@ -37,5 +36,7 @@
 	"hotkeys": {
 		"toggle_languages": "alt + l",
 		"simulate_hotword": "alt + s"
-	}
+	},
+	"ignored_playlists": [],
+	"playlists_search_order": []
 }

@@ -8,6 +8,10 @@ node_modules
 logs
 *.log
 
+# User preferences
+backend/user-preferences/*
+!backend/user-preferences/default.config.json
+
 # Others
 voice-commander-for-spotify/dist
 backend/frontend/*

@@ -4,7 +4,7 @@
 
 		<img class="pull-left" src="assets/Logo.png"/>
 
-		<ul id="user-info" class="pull-right">
+		<ul id="user-info" class="float-right">
 			<li class="dropdown" dropdown dropdownToggle role="button" *ngIf="(user$ | async) as user; else login">
 				<a>{{ userName(user) }} <i class="fa fa-user-circle"></i></a>
 

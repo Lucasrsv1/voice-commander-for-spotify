@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/user/user.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
@@ -12,10 +14,12 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 export class LoginComponent implements OnInit {
 	public error: string;
 	public logout: boolean;
+	public expired: boolean;
 	public loggingIn: boolean = false;
 	public sec: number = 6;
 
 	private destroyed: boolean = false;
+	private subscription: Subscription = null;
 
 	constructor (
 		private activatedRoute: ActivatedRoute,
@@ -25,7 +29,7 @@ export class LoginComponent implements OnInit {
 	) { }
 
 	ngOnInit (): void {
-		this.userService.getUser().subscribe(
+		this.subscription = this.userService.getUser().subscribe(
 			data => {
 				if (data.valid && data.user) {
 					this.router.navigate([""]);
@@ -33,6 +37,7 @@ export class LoginComponent implements OnInit {
 				}
 
 				this.error = this.activatedRoute.snapshot.queryParams["error"];
+				this.expired = this.activatedRoute.snapshot.queryParams["expired"];
 				this.logout = this.activatedRoute.snapshot.queryParams["logout"];
 
 				if (!this.error && this.sec === 6 && !this.logout) {
@@ -46,6 +51,7 @@ export class LoginComponent implements OnInit {
 
 	ngOnDestroy () {
 		this.destroyed = true;
+		this.subscription.unsubscribe();
 	}
 
 	counter (): void {

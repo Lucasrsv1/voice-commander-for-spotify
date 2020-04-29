@@ -1,5 +1,5 @@
 const spotifyAuth = require("./spotifyAuth");
-const spotifyController = require("./spotifyController");
+const spotifyControllerRoutes = require("./spotifyControllerRoutes");
 
 module.exports.configura = function (router) {
 	router.get('/', function (req, res) {
@@ -19,5 +19,5 @@ module.exports.configura = function (router) {
 
 	// ========== SPOTIFY_CONTROLLER ========== //
 
-	router.get('/v1/playlists', spotifyAuth.ensureAuthorized, spotifyController.getPlaylists);
+	router.get('/v1/playlists', spotifyAuth.ensureAuthorized, spotifyControllerRoutes.getPlaylists);
 };

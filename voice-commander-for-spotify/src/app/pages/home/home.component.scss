@@ -1,0 +1,66 @@
+.container {
+	background-color: #FFF;
+}
+
+.card-header {
+	color: #FFF;
+    background-color: #00a339;
+}
+
+:host::ng-deep {
+	.tab-content {
+		border: 1px solid #dee2e6;
+		border-top: 0;
+		padding: 18px;
+	}
+
+	.list-group-item:first-child {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	.list-group-item:last-child {
+		border-bottom-right-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.list-group-item:hover {
+		cursor: grab;
+	}
+
+	.list-group-item:active {
+		cursor: grabbing;
+	}
+
+	.list-group-item.list-group-item-dark {
+		color: #FFF;
+		background-color: #333;
+	}
+
+	.list-group-item-dark.list-group-item-action.active {
+		background-color: #00b33e;
+    	border-color: #00b33e;
+	}
+
+	.list-group-item {
+		i {
+			color: #FFF;
+			line-height: 39px;
+		}
+
+		img {
+			height: 50px;
+			width: 50px;
+			object-fit: cover;
+		}
+
+		.float-right span.float-left {
+			line-height: 50px;
+		}
+
+		.fix-pos {
+			position: relative;
+			top: 8px;
+		}
+	}
+}

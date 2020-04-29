@@ -6,6 +6,7 @@ body {
 	overflow-x: hidden;
 	font-family: "Roboto", Helvetica, Arial, sans-serif;
 	background-color: #F0F0F0;
+	padding-bottom: 20px;
 }
 
 .btn-primary {
@@ -36,4 +37,12 @@ body {
 
 .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(0, 180, 60, 0.5);
+}
+
+a {
+	color: #00B33E;
+}
+
+a:hover {
+	color: #00A339;
 }

@@ -22,6 +22,7 @@
     "@sweetalert2/ngx-sweetalert2": "^5.1.0",
     "bootstrap": "^4.4.1",
     "ngx-bootstrap": "^5.1.1",
+    "ngx-toggle-switch": "^2.0.5",
     "rxjs": "~6.5.4",
     "sweetalert2": "^8.16.3",
     "tslib": "^1.10.0",
