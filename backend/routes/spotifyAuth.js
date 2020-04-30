@@ -118,7 +118,7 @@ function loginCallback (req, res) {
 			loggedUser = data.body;
 
 			// Load this user's preferences
-			require("../voice-commander/index").loadUser();
+			require("../voice-commander/userPreferences").loadUser();
 
 			// Redirect the user to the home page
 			res.redirect('/home');
