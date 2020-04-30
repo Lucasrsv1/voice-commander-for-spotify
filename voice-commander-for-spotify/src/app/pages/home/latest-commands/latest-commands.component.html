@@ -1,0 +1,12 @@
+<ul class="list-group">
+	<li *ngIf="!logs || logs.length === 0" class="list-group-item list-group-item-light">
+		<span>No commands yet</span>
+	</li>
+
+	<li *ngFor="let entry of logs" class="list-group-item" [ngClass]="className(entry)">
+		<span>{{ entry.text }}</span>
+		<button class="btn btn-sm btn-link float-right" (click)="runCmd(entry.text)">
+			<i class="fas fa-redo mr-1"></i> Run again
+		</button>
+	</li>
+</ul>

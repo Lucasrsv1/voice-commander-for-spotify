@@ -39,11 +39,11 @@ body {
     box-shadow: 0 0 0 0.2rem rgba(0, 180, 60, 0.5);
 }
 
-a {
+a, .btn-link {
 	color: #00B33E;
 }
 
-a:hover {
+a:hover, .btn-link:hover {
 	color: #00A339;
 }
 

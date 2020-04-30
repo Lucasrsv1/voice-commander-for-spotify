@@ -2,16 +2,16 @@
 	<div class="card">
 		<div class="card-header" (click)="isConsoleCollapsed = !isConsoleCollapsed" [attr.aria-expanded]="!isConsoleCollapsed" aria-controls="console">
 			<i class="mr-1 fa" [class.fa-caret-right]="isConsoleCollapsed" [class.fa-caret-down]="!isConsoleCollapsed"></i>
-			Voice commander
+			Voice Commander
 		</div>
 		<div class="card-body p-0" id="console" [collapse]="isConsoleCollapsed" [isAnimated]="true">
 			<div class="p-3">
 				<tabset [justified]="true">
 					<tab heading="Commander console" class="p-3">
-						TODO: Voice commander options here... such as recording options, ambiguities solving and command prompt.
+						<app-commander-console></app-commander-console>
 					</tab>
-					<tab heading="Last commands" class="p-3">
-						TODO: History of commands here... add a button to perform the command again.
+					<tab heading="Latest commands">
+						<app-latest-commands></app-latest-commands>
 					</tab>
 				</tabset>
 			</div>

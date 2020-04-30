@@ -18,13 +18,17 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PlaylistsComponent } from './pages/home/playlists/playlists.component';
+import { CommanderConsoleComponent } from './pages/home/commander-console/commander-console.component';
+import { LatestCommandsComponent } from './pages/home/latest-commands/latest-commands.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomeComponent,
 		LoginComponent,
-		PlaylistsComponent
+		PlaylistsComponent,
+		CommanderConsoleComponent,
+		LatestCommandsComponent
 	],
 	imports: [
 		BrowserModule,

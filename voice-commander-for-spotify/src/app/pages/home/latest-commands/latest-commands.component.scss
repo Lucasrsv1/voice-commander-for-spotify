@@ -1,0 +1,13 @@
+li span {
+	line-height: 31px;
+}
+
+ul {
+	max-height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+:host::ng-deep .list-group-item {
+	padding: .22rem 1.25rem;
+}
