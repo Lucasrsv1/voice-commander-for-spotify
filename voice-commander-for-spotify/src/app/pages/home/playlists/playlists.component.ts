@@ -7,11 +7,11 @@ import { PlaylistsService } from 'src/app/services/playlists/playlists.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
-	selector: 'app-playlits',
-	templateUrl: './playlits.component.html',
-	styleUrls: ['./playlits.component.scss']
+	selector: 'app-playlists',
+	templateUrl: './playlists.component.html',
+	styleUrls: ['./playlists.component.scss']
 })
-export class PlaylitsComponent implements OnInit {
+export class PlaylistsComponent implements OnInit {
 	public loading: boolean = false;
 	public savedPlaylists: IPlaylist[] = [];
 	public playlists: IPlaylist[] = [];
