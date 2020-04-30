@@ -7,12 +7,23 @@ const spotifyController = require("./spotifyController");
 var userPreferences = null;
 var availablePlaylists = [];
 
-function loadUser () {
-	let userFile = path.join(__dirname, "..", "user-preferences", `${spotifyAuth.user.id}.config.json`);
-	if (!fs.existsSync(userFile))
-		fs.copyFileSync(path.join(__dirname, "..", "user-preferences", "default.config.json"), userFile);
+function getUserFilePath () {
+	return path.join(__dirname, "..", "user-preferences", `${spotifyAuth.user.id}.config.json`);
+}
 
-	userPreferences = JSON.parse(fs.readFileSync(userFile));
+function loadUser () {
+	if (!fs.existsSync(getUserFilePath()))
+		fs.copyFileSync(path.join(__dirname, "..", "user-preferences", "default.config.json"), getUserFilePath());
+
+	userPreferences = JSON.parse(fs.readFileSync(getUserFilePath()));
+	updateAvailablePlaylists();
+}
+
+function updateUsersPlaylistPreferences (toIgnore, searchOrder) {
+	userPreferences.ignored_playlists = toIgnore;
+	userPreferences.playlists_search_order = searchOrder;
+	fs.writeFileSync(getUserFilePath(), JSON.stringify(userPreferences, null, "\t"));
+
 	updateAvailablePlaylists();
 }
 
@@ -49,6 +60,6 @@ function sortPlaylists (playlists) {
 }
 
 module.exports = {
-	loadUser,
+	loadUser, updateUsersPlaylistPreferences,
 	updateAvailablePlaylists, isPlaylistIgnored, sortPlaylists
 };

@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-12">
+		<div class="d-flex justify-content-center p-4 text-primary" *ngIf="loading">
+			<div class="spinner-border mr-2" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+			<span>Loading...</span>
+		</div>
+
+		<bs-sortable
+			[(ngModel)]="playlists"
+			[itemTemplate]="itemTemplate"
+			itemClass="list-group-item list-group-item-action list-group-item-dark"
+			itemActiveClass="list-group-item list-group-item-action active"
+			placeholderClass="placeholderStyle"
+			wrapperClass="list-group"
+			(onChange)="onSettingsChange()"></bs-sortable>
+
+		<ng-template #itemTemplate let-item="item" let-index="index">
+			<i class="fas fa-grip-vertical mr-3"></i>
+			<img [src]="getImg(item.value)" class="mr-3"/>
+			<span>{{ item.value.name }}</span>
+
+			<span class="float-right">
+				<span class="float-left mr-3">{{ item.value.tracks.total }} song{{ item.value.tracks.total > 1 ? 's' : '' }}</span>
+				<ui-switch
+					class="fix-pos"
+					color="#00A339"
+					defaultBoColor="none"
+					[(ngModel)]="item.value.not_ignored"
+					(change)="onSettingsChange()"></ui-switch>
+			</span>
+		</ng-template>
+	</div>
+</div>

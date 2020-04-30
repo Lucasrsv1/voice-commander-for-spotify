@@ -1,3 +1,5 @@
+const log = require("./log");
+
 /**
  * Generates a random string containing numbers and letters
  * @param {number} length The length of the string
@@ -11,6 +13,12 @@ function generateRandomString (length) {
 		text += possible.charAt(Math.floor(Math.random() * possible.length));
 
 	return text;
-};
+}
 
-module.exports = { generateRandomString };
+function handleInternalErro (res, error) {
+	log.error(error);
+	console.error(error);
+	res.status(500).json(error);
+}
+
+module.exports = { generateRandomString, handleInternalErro };

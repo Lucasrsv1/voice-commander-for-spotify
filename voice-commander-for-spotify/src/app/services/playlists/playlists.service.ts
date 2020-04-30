@@ -12,4 +12,8 @@ export class PlaylistsService {
 	getUserPlaylists (): Observable<IPlaylist[]> {
 		return this.http.get<IPlaylist[]>(`${environment.apiURL}/v1/playlists`);
 	}
+
+	updateUserPlaylists (toIgnore: string[], searchOrder: string[]): Observable<any> {
+		return this.http.post(`${environment.apiURL}/v1/playlists`, { toIgnore, searchOrder });
+	}
 }

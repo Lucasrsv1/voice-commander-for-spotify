@@ -11,22 +11,22 @@ export class UtilsService {
 		private userService: UserService
 	) {}
 
-	getErrorHandler (errorTitle: string = "Erro!", suppressUnauthorized: boolean = false): (err: any) => void {
+	private loginExpired (): void {
+		this.userService.logout().subscribe(
+			_ => this.router.navigate(["login"], { queryParams: { expired: true } }),
+			this.getErrorHandler("Error on logout")
+		);
+	}
+
+	getErrorHandler (errorTitle: string = "Erro!"): (err: any) => void {
 		return (err: any) => {
-			if (suppressUnauthorized && err.status === 401)
-				return;
+			if (err.status === 401)
+				return this.loginExpired();
 
 			if (err.error) {
 				err = err.error;
-
-				if (err.statusCode === 401 && err.name === "WebapiError") {
-					// Login expired
-					this.userService.logout().subscribe(
-						_ => this.router.navigate(["login"], { queryParams: { expired: true } }),
-						this.getErrorHandler("Error on logout")
-					);
-					return;
-				}
+				if (err.statusCode === 401 && err.name === "WebapiError")
+					return this.loginExpired();
 			}
 
 			console.error(err);
@@ -36,6 +36,34 @@ export class UtilsService {
 				text: err.message || "Unexpected error!",
 				confirmButtonColor: "#3C58BF"
 			});
+		}
+	}
+
+	cloneObj<T> (obj: T, throwException: boolean = false): T {
+		try {
+			return JSON.parse(JSON.stringify(obj)) as T;
+		} catch (error) {
+			let exception = new Error("Only valid JSON like objects can be cloned!\n" + error.stack);
+			if (throwException)
+				throw exception;
+			else
+				console.log(exception);
+
+			return null;
+		}
+	}
+
+	equals (objA: any, objB: any, throwException: boolean = false): boolean {
+		try {
+			return JSON.stringify(objA) === JSON.stringify(objB);
+		} catch (error) {
+			let exception = new Error("Only valid JSON like objects can be compared!\n" + error.stack);
+			if (throwException)
+				throw exception;
+			else
+				console.log(exception);
+
+			return null;
 		}
 	}
 }

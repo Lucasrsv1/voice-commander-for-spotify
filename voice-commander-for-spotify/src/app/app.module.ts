@@ -17,12 +17,14 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { PlaylitsComponent } from './pages/home/playlits/playlits.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomeComponent,
-		LoginComponent
+		LoginComponent,
+		PlaylitsComponent
 	],
 	imports: [
 		BrowserModule,
