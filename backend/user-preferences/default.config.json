@@ -11,7 +11,11 @@
 		"next_cmd": ["next", "skip"],
 		"previous_cmd": ["previous", "go back"],
 		"repeat_cmd": ["repeat"],
-		"artist_separators": ["by", "from", "of"],
+		"artist_separators": ["by", "from"],
+		"album_separators": {
+			"separators": ["from"],
+			"album": ["album", "disc"]
+		},
 		"add_cmd": ["add"],
 		"random_cmd": ["random", "shuffle"],
 		"enable_cmd": ["enable", "enabled", "active", "on"],
@@ -28,6 +32,10 @@
 		"previous_cmd": ["anterior", "volta"],
 		"repeat_cmd": ["repetir", "repita"],
 		"artist_separators": ["da", "do", "por", "pelo", "pela"],
+		"album_separators": {
+			"separators": ["do"],
+			"album": ["álbum", "disco"]
+		},
 		"add_cmd": ["adicionar", "adiciona"],
 		"random_cmd": ["aleatório"],
 		"enable_cmd": ["ligado", "ligada", "ativo", "ativa"],

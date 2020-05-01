@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ICmdLog, LogStatus } from './ICmdLog';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HotwordsService } from './hotwords.service';
+import { HotwordsService } from './hotwords/hotwords.service';
 
 interface webkitSpeechRecognition extends SpeechRecognition {}
 
@@ -35,6 +35,13 @@ export class VoiceCommanderService {
 
 		// TODO: use user's preferences to decide what language to use
 		this.setLanguage("en-US");
+
+		// Register hotwords
+		this.hotwordsService.setTriggerWord("Spotify");
+		this.hotwordsService.on("play [[the] song] {WORDS} [{by|from} {!album} {!disc} {WORDS}]", true, this.playSong.bind(this));
+		this.hotwordsService.on("play [[the] song] {WORDS} from [the] {album|disc} {WORDS}", true, this.playSongFromAlbum.bind(this));
+
+		this.hotwordsService.logRegisteredHotwords();
 	}
 
 	speechResult (event: SpeechRecognitionEvent): void {
@@ -72,5 +79,16 @@ export class VoiceCommanderService {
 		let status = await this.hotwordsService.evaluate(cmd);
 		log.status = status;
 		this.updateLogs();
+	}
+
+	playSong (songName: string, separator?: string, artist?: string): void {
+		console.log("Song:", songName);
+		console.log("Separator:", separator);
+		console.log("Artist?:", artist);
+	}
+
+	playSongFromAlbum (songName: string, album?: string): void {
+		console.log("Song:", songName);
+		console.log("Album?:", album);
 	}
 }
