@@ -38,8 +38,19 @@ export class VoiceCommanderService {
 
 		// Register hotwords
 		this.hotwordsService.setTriggerWord("Spotify");
-		this.hotwordsService.on("play [[the] song] {WORDS} [{by|from} {!album} {!disc} {WORDS}]", true, this.playSong.bind(this));
-		this.hotwordsService.on("play [[the] song] {WORDS} from [the] {album|disc} {WORDS}", true, this.playSongFromAlbum.bind(this));
+		this.hotwordsService.on([{
+			cmd: "play [[the] song] {WORDS} from [the] {album|disc} {WORDS}",
+			ignoreTriggerWord: true,
+			callback: this.playSongFromAlbum.bind(this)
+		}, {
+			cmd: "play [[the] song] {WORDS} [{by||from} [[the] {artist|singer}] {WORDS}]",
+			ignoreTriggerWord: true,
+			callback: this.playSong.bind(this)
+		}]);
+
+		this.hotwordsService.on("{play||resume} [song]", this.resume.bind(this));
+		this.hotwordsService.on("[bring] volume {up||down}", this.volume.bind(this));
+		this.hotwordsService.on("{increase||decrease} volume", this.volume.bind(this));
 
 		this.hotwordsService.logRegisteredHotwords();
 	}
@@ -76,19 +87,35 @@ export class VoiceCommanderService {
 		this.commandsHistory.push(log);
 		this.updateLogs();
 
-		let status = await this.hotwordsService.evaluate(cmd);
-		log.status = status;
+		let status = await this.hotwordsService.evaluate<Promise<LogStatus>>(cmd);
+		log.status = status ? status : LogStatus.NOT_RECOGNIZED;
 		this.updateLogs();
 	}
 
-	playSong (songName: string, separator?: string, artist?: string): void {
+	async playSong (songName: string, separator?: string, artist?: string): Promise<LogStatus> {
 		console.log("Song:", songName);
 		console.log("Separator:", separator);
 		console.log("Artist?:", artist);
+		return LogStatus.SUCCESS;
 	}
 
-	playSongFromAlbum (songName: string, album?: string): void {
+	async playSongFromAlbum (songName: string, album?: string): Promise<LogStatus> {
 		console.log("Song:", songName);
 		console.log("Album?:", album);
+		return LogStatus.SUCCESS;
+	}
+
+	async volume (upOrDown: string): Promise<LogStatus> {
+		if (upOrDown === "up" || upOrDown === "increase")
+			console.log("Increase volume");
+		else
+			console.log("Decrease volume");
+
+		return LogStatus.SUCCESS;
+	}
+
+	async resume (): Promise<LogStatus> {
+		console.log("Resume song");
+		return LogStatus.SUCCESS;
 	}
 }
