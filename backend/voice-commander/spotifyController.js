@@ -1,5 +1,10 @@
 const spotifyAuth = require("../routes/spotifyAuth");
 
+/**
+ * Handle pagination on a call to the spotify API endpoint returning the full results
+ * @param {function (): Promise<any>} apiCall function that calls the Spotify API
+ * @returns {Promise<Array<any>>}
+ */
 async function paginationHandler (apiCall) {
 	let data;
 	let offset = 0;
@@ -45,4 +50,32 @@ async function getPlaylistTracks (playlistId) {
 	});
 }
 
-module.exports = { getPlaylists, getPlaylistTracks };
+/**
+ * Search tracks on Spotify
+ * @param {string} searchQuery search query to be used
+ * @returns {Promise<Response<SpotifyApi.SearchResponse>>}
+ */
+function searchTracks (searchQuery) {
+	return spotifyAuth.spotifyApi.searchTracks(searchQuery);
+}
+
+/**
+ * Play the specified track
+ * @param {string} trackId track identifier
+ * @returns {Promise<any>}
+ */
+async function playTrack (trackId) {
+	// TODO: add track to the queue and skip to it
+	// this way spotify won't stop playing after the song ends
+
+	// await spotifyAuth.spotifyApi.skipToNext();
+
+	return spotifyAuth.spotifyApi.play({
+		uris: [`spotify:track:${trackId}`]
+	});
+}
+
+module.exports = {
+	getPlaylists, getPlaylistTracks,
+	searchTracks, playTrack
+};

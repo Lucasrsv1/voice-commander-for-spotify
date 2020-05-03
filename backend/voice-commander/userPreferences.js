@@ -4,10 +4,17 @@ const spotifyAuth = require("../routes/spotifyAuth");
 
 var userPreferences = null;
 
+/**
+ * Find current user's preferences JSON file
+ * @returns {string}
+ */
 function getUserFilePath () {
 	return path.join(__dirname, "..", "user-preferences", `${spotifyAuth.user.id}.config.json`);
 }
 
+/**
+ * Load current user's preferences
+ */
 function loadUser () {
 	if (!fs.existsSync(getUserFilePath()))
 		fs.copyFileSync(path.join(__dirname, "..", "user-preferences", "default.config.json"), getUserFilePath());
@@ -16,6 +23,11 @@ function loadUser () {
 	require("../voice-commander/index").loadAvailablePlaylists();
 }
 
+/**
+ * Update and safe current user's preferences
+ * @param {string[]} toIgnore identifiers of the playlists that must be ignored
+ * @param {string[]} searchOrder identifiers of the playlists in the order they must be searched
+ */
 function updateUsersPlaylistPreferences (toIgnore, searchOrder) {
 	userPreferences.ignored_playlists = toIgnore;
 	userPreferences.playlists_search_order = searchOrder;
@@ -24,10 +36,19 @@ function updateUsersPlaylistPreferences (toIgnore, searchOrder) {
 	require("../voice-commander/index").loadAvailablePlaylists();
 }
 
+/**
+ * Determine whether a playlist must be ignored according to current user's preferences
+ * @param {string} playlist identifier of the playlist
+ * @returns {boolean} if `true` the playlist must be ignored
+ */
 function isPlaylistIgnored (playlist) {
 	return userPreferences.ignored_playlists.indexOf(playlist.id) !== -1;
 }
 
+/**
+ * Sort a list of playlists according to current user's preferences
+ * @param {SpotifyApi.PlaylistObjectSimplified} playlists array of playlists to be sorted
+ */
 function sortPlaylists (playlists) {
 	playlists.sort((playlistA, playlistB) => {
 		let a = userPreferences.playlists_search_order.indexOf(playlistA.id);

@@ -23,4 +23,8 @@ module.exports.configura = function (router) {
 	router.post('/v1/playlists', spotifyAuth.ensureAuthorized, spotifyControllerRoutes.updateUsersPlaylistPreferences);
 
 	router.get('/v1/playlist/tracks', spotifyAuth.ensureAuthorized, spotifyControllerRoutes.getPlaylistTracks);
+
+	// ===== PLAYBACK ===== //
+
+	router.post('/v1/playback/play', spotifyAuth.ensureAuthorized, spotifyControllerRoutes.play);
 };

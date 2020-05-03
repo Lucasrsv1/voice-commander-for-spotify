@@ -1,6 +1,7 @@
 const utils = require("../utils/utils");
 const spotifyController = require("../voice-commander/spotifyController");
 const userPreferences = require("../voice-commander/userPreferences");
+const voiceCommander = require("../voice-commander/index");
 
 /**
  * Retrieve user's playlists
@@ -59,7 +60,28 @@ function updateUsersPlaylistPreferences (req, res) {
 	}
 }
 
+/**
+ * Start playing a specific song
+ * @param {HttpRequest} req
+ * @param {HttpResponse} res
+ */
+async function play (req, res) {
+	try {
+		if (!req.body.song)
+			return res.status(400).json({ message: "Parameter 'song' is missing" });
+
+		let result = await voiceCommander.play(req.body.song, req.body.artist, req.body.album, req.body.separator);
+		if (result)
+			res.status(200).json(result);
+		else
+			res.status(404).json({ message: "Song not found" });
+	} catch (error) {
+		utils.handleInternalErro(res, error);
+	}
+}
+
 module.exports = {
 	getPlaylists, getPlaylistTracks,
-	updateUsersPlaylistPreferences
+	updateUsersPlaylistPreferences,
+	play
 };

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ICmdLog, LogStatus } from './ICmdLog';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { HotwordsService } from './hotwords/hotwords.service';
+import { PlaybackService } from '../playback/playback.service';
 
 interface webkitSpeechRecognition extends SpeechRecognition {}
 
@@ -21,7 +22,10 @@ export class VoiceCommanderService {
 	private commandsHistory: Array<ICmdLog>;
 	private logsSubject = new BehaviorSubject<ICmdLog[]>([]);
 
-	constructor (private hotwordsService: HotwordsService) {
+	constructor (
+		private hotwordsService: HotwordsService,
+		private playbackService: PlaybackService
+	) {
 		this.commandsHistory = [];
 		if (typeof SpeechRecognition === "undefined")
 			this.speech = new webkitSpeechRecognition();
@@ -49,9 +53,8 @@ export class VoiceCommanderService {
 		}]);
 
 		this.hotwordsService.on("{play||resume} [song]", this.resume.bind(this));
-		this.hotwordsService.on("[bring] volume {up||down}", this.volume.bind(this));
-		this.hotwordsService.on("{increase||decrease} volume", this.volume.bind(this));
-
+		this.hotwordsService.on("[bring [the]] volume {up||down}", this.volume.bind(this));
+		this.hotwordsService.on("{increase||decrease} [the] volume", this.volume.bind(this));
 		this.hotwordsService.logRegisteredHotwords();
 	}
 
@@ -92,17 +95,28 @@ export class VoiceCommanderService {
 		this.updateLogs();
 	}
 
-	async playSong (songName: string, separator?: string, artist?: string): Promise<LogStatus> {
-		console.log("Song:", songName);
-		console.log("Separator:", separator);
-		console.log("Artist?:", artist);
-		return LogStatus.SUCCESS;
+	async playSong (song: string, separator?: string, artist?: string): Promise<LogStatus> {
+		try {
+			let result = await this.playbackService.playSong({ song, artist, separator }).toPromise();
+			if (result.length > 1)
+				return LogStatus.AMBIGUOUS;
+			else
+				return LogStatus.SUCCESS;
+		} catch (error) {
+			return LogStatus.ERROR;
+		}
 	}
 
-	async playSongFromAlbum (songName: string, album?: string): Promise<LogStatus> {
-		console.log("Song:", songName);
-		console.log("Album?:", album);
-		return LogStatus.SUCCESS;
+	async playSongFromAlbum (song: string, album?: string): Promise<LogStatus> {
+		try {
+			let result = await this.playbackService.playSong({ song, album }).toPromise();
+			if (result.length > 1)
+				return LogStatus.AMBIGUOUS;
+			else
+				return LogStatus.SUCCESS;
+		} catch (error) {
+			return LogStatus.ERROR;
+		}
 	}
 
 	async volume (upOrDown: string): Promise<LogStatus> {
