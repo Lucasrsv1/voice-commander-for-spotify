@@ -70,12 +70,15 @@ async function play (req, res) {
 		if (!req.body.song)
 			return res.status(400).json({ message: "Parameter 'song' is missing" });
 
-		let result = await voiceCommander.play(req.body.song, req.body.artist, req.body.album, req.body.separator);
-		if (result)
+		let result = await voiceCommander.play(req.body.song, req.body.artist, req.body.album, req.body.separator, req.body.onlyAddToQueue);
+		if (result.tracks.length > 0)
 			res.status(200).json(result);
 		else
 			res.status(404).json({ message: "Song not found" });
 	} catch (error) {
+		if (!error)
+			error = { message: "Still loading data from Spotify. This may be a connection issue. Please check your internet connection." };
+
 		utils.handleInternalErro(res, error);
 	}
 }

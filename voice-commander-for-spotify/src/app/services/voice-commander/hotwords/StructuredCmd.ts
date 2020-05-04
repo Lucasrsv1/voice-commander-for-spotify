@@ -200,25 +200,40 @@ export class StructuredCmd {
 		let command = new StructuredCmd(cmd);
 		command.type = CmdType.POINTER;
 
-		if (cmd.indexOf("[") > -1 || cmd.indexOf("{") > -1) {
-			let bracketsIndex = cmd.indexOf("[");
-			let curlyBracketsIndex = cmd.indexOf("{");
-			if (curlyBracketsIndex === -1 || (bracketsIndex < curlyBracketsIndex && bracketsIndex !== -1)) {
-				let pieces = this.splitBrackets(cmd, false, command);
-				if (pieces.bracketsCmd)
-					pieces.bracketsCmd.isRequired = false;
-			} else {
-				this.splitBrackets(cmd, true, command);
-			}
-		} else if (cmd.indexOf("|") > -1) {
-			if (cmd.indexOf("||") > -1) {
+		let bracketsIndex = cmd.indexOf("[");
+		let curlyBracketsIndex = cmd.indexOf("{");
+		let pipeIndex = cmd.indexOf("|");
+
+		if (
+			bracketsIndex > -1 && (
+				(bracketsIndex < curlyBracketsIndex || curlyBracketsIndex === -1) &&
+				(bracketsIndex < pipeIndex || pipeIndex === -1)
+			)
+		) {
+			let pieces = this.splitBrackets(cmd, false, command);
+			if (pieces.bracketsCmd)
+				pieces.bracketsCmd.isRequired = false;
+		} else if (
+			curlyBracketsIndex > -1 && (
+				(curlyBracketsIndex < bracketsIndex || bracketsIndex === -1) &&
+				(curlyBracketsIndex < pipeIndex || pipeIndex === -1)
+			)
+		) {
+			this.splitBrackets(cmd, true, command);
+		} else if (pipeIndex > -1) {
+			if (pipeIndex === cmd.indexOf("||")) {
 				command.type = CmdType.SWITCH;
-				cmd = cmd.replace(/\|\|/g, '|');
+				cmd = cmd.replace("||", '|');
 			} else {
 				command.type = CmdType.OR;
 			}
 
-			cmd.split('|').reduce((parent, c) => {
+			let parts = [
+				cmd.substring(0, pipeIndex),
+				cmd.substring(pipeIndex + 1)
+			];
+
+			parts.reduce((parent, c) => {
 				let node = StructuredCmd.parse(c);
 				parent.deepCmd = node;
 				return node;

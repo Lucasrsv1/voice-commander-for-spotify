@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ICmdLog, LogStatus } from './ICmdLog';
+import { ITrack } from 'src/app/models/ITrack';
 import { HotwordsService } from './hotwords/hotwords.service';
 import { PlaybackService } from '../playback/playback.service';
 
@@ -36,6 +37,7 @@ export class VoiceCommanderService {
 		this.speech.continuous = true;
 		this.speech.onresult = this.speechResult.bind(this);
 		this.speech.onend = this.speechEnd.bind(this);
+		this.speech.onerror = this.speechError.bind(this);
 
 		// TODO: use user's preferences to decide what language to use
 		this.setLanguage("en-US");
@@ -43,18 +45,21 @@ export class VoiceCommanderService {
 		// Register hotwords
 		this.hotwordsService.setTriggerWord("Spotify");
 		this.hotwordsService.on([{
-			cmd: "play [[the] song] {WORDS} from [the] {album|disc} {WORDS}",
+			cmd: "{play||{{add|ad|list} [up] [to [the] queue]}} [[the] song] {WORDS} from [the] {album|disc} {WORDS}",
 			ignoreTriggerWord: true,
 			callback: this.playSongFromAlbum.bind(this)
 		}, {
-			cmd: "play [[the] song] {WORDS} [{by||from} [[the] {artist|singer}] {WORDS}]",
+			cmd: "{play||{{add|ad|list} [up] [to [the] queue]}} [[the] song] {WORDS} [{by||from} [[the] {artist|singer}] {WORDS}]",
 			ignoreTriggerWord: true,
 			callback: this.playSong.bind(this)
 		}]);
 
-		this.hotwordsService.on("{play||resume} [song]", this.resume.bind(this));
+		this.hotwordsService.on("{play|resume} [[the] song]", this.resume.bind(this));
+		this.hotwordsService.on("{stop|pause} [[the] song]", this.pause.bind(this));
+
 		this.hotwordsService.on("[bring [the]] volume {up||down}", this.volume.bind(this));
 		this.hotwordsService.on("{increase||decrease} [the] volume", this.volume.bind(this));
+
 		this.hotwordsService.logRegisteredHotwords();
 	}
 
@@ -67,6 +72,14 @@ export class VoiceCommanderService {
 	speechEnd (event: SpeechRecognitionEvent): void {
 		if (this.keepListening)
 			this.speech.start();
+	}
+
+	speechError (event: ErrorEvent): void {
+		console.error(event);
+		this.speech.stop();
+		if (event.error === "network") {
+			// TODO: handle this error
+		}
 	}
 
 	setLanguage (languageCode: string) {
@@ -95,26 +108,38 @@ export class VoiceCommanderService {
 		this.updateLogs();
 	}
 
-	async playSong (song: string, separator?: string, artist?: string): Promise<LogStatus> {
+	async playSong (playOrAdd: string, song: string, separator?: string, artist?: string): Promise<LogStatus> {
 		try {
-			let result = await this.playbackService.playSong({ song, artist, separator }).toPromise();
+			let result: ITrack[];
+			if (playOrAdd === "play")
+				result = await this.playbackService.playSong({ song, artist, separator }).toPromise();
+			else
+				result = await this.playbackService.addSongToQueue({ song, artist, separator }).toPromise();
+
 			if (result.length > 1)
 				return LogStatus.AMBIGUOUS;
 			else
 				return LogStatus.SUCCESS;
 		} catch (error) {
+			console.log(error);
 			return LogStatus.ERROR;
 		}
 	}
 
-	async playSongFromAlbum (song: string, album?: string): Promise<LogStatus> {
+	async playSongFromAlbum (playOrAdd: string, song: string, album?: string): Promise<LogStatus> {
 		try {
-			let result = await this.playbackService.playSong({ song, album }).toPromise();
+			let result: ITrack[];
+			if (playOrAdd === "play")
+				result = await this.playbackService.playSong({ song, album }).toPromise();
+			else
+				result = await this.playbackService.addSongToQueue({ song, album }).toPromise();
+
 			if (result.length > 1)
 				return LogStatus.AMBIGUOUS;
 			else
 				return LogStatus.SUCCESS;
 		} catch (error) {
+			console.log(error);
 			return LogStatus.ERROR;
 		}
 	}
@@ -130,6 +155,11 @@ export class VoiceCommanderService {
 
 	async resume (): Promise<LogStatus> {
 		console.log("Resume song");
+		return LogStatus.SUCCESS;
+	}
+
+	async pause (): Promise<LogStatus> {
+		console.log("Pause song");
 		return LogStatus.SUCCESS;
 	}
 }

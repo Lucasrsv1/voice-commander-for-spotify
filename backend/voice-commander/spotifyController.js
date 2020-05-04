@@ -60,22 +60,36 @@ function searchTracks (searchQuery) {
 }
 
 /**
+ * Retrieve information about the current playback status
+ * @returns {Promise<SpotifyApi.CurrentPlaybackResponse>}
+ */
+async function getPlaybackState () {
+	return (await spotifyAuth.spotifyApi.getMyCurrentPlaybackState()).body;
+}
+
+/**
  * Play the specified track
  * @param {string} trackId track identifier
+ * @param {string} [contextUri] uri of the album or playlist that the track is part of
  * @returns {Promise<any>}
  */
-async function playTrack (trackId) {
-	// TODO: add track to the queue and skip to it
-	// this way spotify won't stop playing after the song ends
-
-	// await spotifyAuth.spotifyApi.skipToNext();
-
+async function playTrack (trackId, contextUri) {
 	return spotifyAuth.spotifyApi.play({
-		uris: [`spotify:track:${trackId}`]
+		context_uri: contextUri,
+		offset: { uri: `spotify:track:${trackId}` }
 	});
 }
 
+/**
+ * Add the specified track to the queue
+ * @param {string} trackId track identifier
+ * @returns {Promise<any>}
+ */
+async function addTrackToQueue (trackId) {
+	return spotifyAuth.spotifyApi.addTrackToQueue(`spotify:track:${trackId}`);
+}
+
 module.exports = {
-	getPlaylists, getPlaylistTracks,
-	searchTracks, playTrack
+	getPlaylists, getPlaylistTracks, searchTracks,
+	getPlaybackState, playTrack, addTrackToQueue
 };

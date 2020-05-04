@@ -17,6 +17,16 @@ export class PlaybackService {
 	constructor (private http: HttpClient) { }
 
 	playSong (params: ISongParams): Observable<ITrack[]> {
-		return this.http.post<ITrack[]>(`${environment.apiURL}/v1/playback/play`, params);
+		let _params: any = params;
+		_params.onlyAddToQueue = false;
+
+		return this.http.post<ITrack[]>(`${environment.apiURL}/v1/playback/play`, _params);
+	}
+
+	addSongToQueue (params: ISongParams): Observable<ITrack[]> {
+		let _params: any = params;
+		_params.onlyAddToQueue = true;
+
+		return this.http.post<ITrack[]>(`${environment.apiURL}/v1/playback/play`, _params);
 	}
 }
