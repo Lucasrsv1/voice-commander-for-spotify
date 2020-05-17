@@ -24,6 +24,18 @@ function loadUser () {
 }
 
 /**
+ * Retrieve current user's preferences
+ * @param {HttpRequest} req
+ * @param {HttpResponse} res
+ */
+function getUserPreferences (req, res) {
+	if (userPreferences)
+		res.status(200).json(userPreferences);
+	else
+		res.status(404).json({ message: "User's preferences not found" })
+}
+
+/**
  * Update and safe current user's preferences
  * @param {string[]} toIgnore identifiers of the playlists that must be ignored
  * @param {string[]} searchOrder identifiers of the playlists in the order they must be searched
@@ -66,6 +78,6 @@ function sortPlaylists (playlists) {
 }
 
 module.exports = {
-	loadUser, updateUsersPlaylistPreferences,
+	loadUser, getUserPreferences, updateUsersPlaylistPreferences,
 	isPlaylistIgnored, sortPlaylists
 };

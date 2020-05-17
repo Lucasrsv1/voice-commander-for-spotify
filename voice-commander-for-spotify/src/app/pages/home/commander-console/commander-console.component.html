@@ -3,7 +3,7 @@
 		<div class="col-12">
 			<label for="command">Command prompt</label>
 			<div id="prompt">
-				<form (submit)="sendCmd()" class="d-inline-block">
+				<form (ngSubmit)="sendCmd()" class="d-inline-block">
 					<input type="text" id="command" [(ngModel)]="command" name="command"
 						   class="form-control form-control-sm d-inline-block mr-1"/>
 

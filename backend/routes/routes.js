@@ -1,5 +1,6 @@
 const spotifyAuth = require("./spotifyAuth");
 const spotifyControllerRoutes = require("./spotifyControllerRoutes");
+const userPreferences = require("../voice-commander/userPreferences");
 
 module.exports.configura = function (router) {
 	router.get('/', function (req, res) {
@@ -27,4 +28,8 @@ module.exports.configura = function (router) {
 	// ===== PLAYBACK ===== //
 
 	router.post('/v1/playback/play', spotifyAuth.ensureAuthorized, spotifyControllerRoutes.play);
+
+	// ===== PREFERENCES ===== //
+
+	router.get('/v1/preferences/user', spotifyAuth.ensureAuthorized, userPreferences.getUserPreferences)
 };

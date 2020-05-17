@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -15,11 +15,13 @@ import { ErrorsModule } from './errors/errors.module';
 import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
-import { PlaylistsComponent } from './pages/home/playlists/playlists.component';
+
+import { HomeComponent } from './pages/home/home.component';
 import { CommanderConsoleComponent } from './pages/home/commander-console/commander-console.component';
 import { LatestCommandsComponent } from './pages/home/latest-commands/latest-commands.component';
+import { PlaylistsComponent } from './pages/home/playlists/playlists.component';
+import { PreferencesComponent } from './pages/home/preferences/preferences.component';
 
 @NgModule({
 	declarations: [
@@ -28,12 +30,14 @@ import { LatestCommandsComponent } from './pages/home/latest-commands/latest-com
 		LoginComponent,
 		PlaylistsComponent,
 		CommanderConsoleComponent,
-		LatestCommandsComponent
+		LatestCommandsComponent,
+		PreferencesComponent
 	],
 	imports: [
 		BrowserModule,
 		BrowserAnimationsModule,
 		FormsModule,
+		ReactiveFormsModule,
 		ErrorsModule,
 		ComponentsModule,
 		BsDropdownModule.forRoot(),

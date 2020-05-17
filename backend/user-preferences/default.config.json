@@ -43,7 +43,7 @@
 	}],
 	"hotkeys": {
 		"toggle_languages": "alt + l",
-		"simulate_hotword": "alt + s"
+		"start_listening": "alt + s"
 	},
 	"ignored_playlists": [],
 	"playlists_search_order": []

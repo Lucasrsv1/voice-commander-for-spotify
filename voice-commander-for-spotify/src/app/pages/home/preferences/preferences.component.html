@@ -1,0 +1,50 @@
+<div>
+	<form [formGroup]="form" (ngSubmit)="savePreferences()">
+		<h3>General</h3>
+		<div class="row">
+			<div class="col-12 col-md-6">
+				<label for="app_language">App Language</label>
+				<visual-validator [config]="validations" field="app_language">
+					<select id="app_language" formControlName="app_language" class="form-control custom-select custom-select-sm">
+						<option value="">Select a language</option>
+						<option value="en-US">English (en-US)</option>
+						<option value="pt-BR">Português (pt-BR)</option>
+					</select>
+				</visual-validator>
+			</div>
+		</div>
+
+		<hr/>
+
+		<h3>Hotkeys</h3>
+		<div class="row">
+			<div class="col-12 col-md-6 form-group">
+				<label for="start_listening">Start Listening</label>
+				<visual-validator [config]="validations" field="start_listening">
+					<input id="start_listening" formControlName="start_listening" readonly
+						   class="form-control form-control-sm bg-transparent" (focus)="getHotkey('start_listening')"/>
+				</visual-validator>
+			</div>
+			<div class="col-12 col-md-6">
+				<label for="toggle_languages">Toggle Languages</label>
+				<visual-validator [config]="validations" field="toggle_languages">
+					<input id="toggle_languages" formControlName="toggle_languages" readonly
+						   class="form-control form-control-sm bg-transparent" (focus)="getHotkey('toggle_languages')"/>
+				</visual-validator>
+			</div>
+		</div>
+
+		<hr/>
+
+		<h3>Languages to Listen</h3>
+		<div class="row">
+			<div class="col-12">
+				TODO: add list of languages and option do add other languages
+			</div>
+		</div>
+
+		<button class="btn btn-primary mt-4" type="submit" [disabled]="!form.valid">
+			<i class="far fa-save mr-1"></i> Save Preferences
+		</button>
+	</form>
+</div>
