@@ -11,32 +11,7 @@ div.text-primary span {
 		cursor: grabbing;
 	}
 
-	.list-group-item-dark.list-group-item-action.active {
-		background-color: #00b33e;
-    	border-color: #00b33e;
-	}
-
-	.list-group-item.list-group-item-dark {
-		color: #FFF;
-		background-color: #333;
-	}
-
 	.list-group-item {
-		i {
-			color: #FFF;
-			line-height: 39px;
-		}
-
-		img {
-			height: 50px;
-			width: 50px;
-			object-fit: cover;
-		}
-
-		.float-right span.float-left {
-			line-height: 50px;
-		}
-
 		.fix-pos {
 			position: relative;
 			top: 8px;

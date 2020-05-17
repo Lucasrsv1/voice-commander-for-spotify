@@ -55,16 +55,24 @@ export class HotwordsService {
 		console.log(this._registeredHotwords);
 	}
 
-	public evaluate<T> (input: string): T {
-		let result: T = null;
+	public evaluate<T> (input: string): T[];
+	public evaluate<T> (input: string, getFirstMatch: boolean): T;
+
+	public evaluate<T> (input: string, getFirstMatch: boolean = false): T | T[] {
+		let evaluation: T;
+		let results: T[] = [];
+
 		for (let hotword of this._registeredHotwords) {
 			if (Array.isArray(hotword))
-				result = this.evaluateHotwords<T>(input, hotword);
+				evaluation = this.evaluateHotwords<T>(input, hotword);
 			else
-				result = this.evaluateHotwords<T>(input, [hotword]);
+				evaluation = this.evaluateHotwords<T>(input, [hotword]);
+
+			if (evaluation !== undefined)
+				results.push(evaluation);
 		}
 
-		return result;
+		return getFirstMatch ? results[0] : results;
 	}
 
 	private evaluateHotwords<T> (input: string, hotwords: IHotword[]): T {
@@ -97,6 +105,6 @@ export class HotwordsService {
 			}
 		}
 
-		return null as T;
+		return undefined as T;
 	}
 }

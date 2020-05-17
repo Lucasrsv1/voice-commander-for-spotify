@@ -1,1 +1,42 @@
-<span>TODO: Voice commander options here... such as recording options, ambiguities solving and command prompt.</span>
+<div>
+	<div class="row">
+		<div class="col-12">
+			<label for="command">Command prompt</label>
+			<div id="prompt">
+				<form (submit)="sendCmd()" class="d-inline-block">
+					<input type="text" id="command" [(ngModel)]="command" name="command"
+						   class="form-control form-control-sm d-inline-block mr-1"/>
+
+					<button class="btn btn-sm btn-primary" type="submit">
+						<i class="fa fa-arrow-right"></i>
+					</button>
+				</form>
+
+				<button class="btn btn-sm btn-primary float-right" (click)="toggleRecording()">
+					<i class="red mr-1" [ngClass]="recording ? 'fa fa-circle' : 'far fa-dot-circle'"></i>
+					{{ recording ? 'Listening' : 'Listen to' }} commands
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<hr/>
+
+	<ul class="list-group">
+		<li *ngIf="!tracks || tracks.length === 0" class="list-group-item list-group-item-light">
+			<span>No music requested</span>
+		</li>
+
+		<li *ngFor="let track of tracks; index as i" (click)="playTrack(i)"
+			class="list-group-item list-group-item-action list-group-item-dark"
+			[class.active]="i === selectedTrack">
+			<i class="mr-3" [ngClass]="isPlay ? 'far fa-play-circle' : 'fas fa-plus'"></i>
+
+			<img [src]="getImg(track)" class="mr-3"/>
+			<span>{{ track.name }} by {{ track.artists[0].name }}</span>
+
+			<span class="float-right" *ngIf="i === selectedTrack">Chosen</span>
+		</li>
+	</ul>
+
+</div>

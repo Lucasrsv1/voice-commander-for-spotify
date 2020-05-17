@@ -67,10 +67,19 @@ function updateUsersPlaylistPreferences (req, res) {
  */
 async function play (req, res) {
 	try {
-		if (!req.body.song)
-			return res.status(400).json({ message: "Parameter 'song' is missing" });
+		let result;
+		if (req.body.id) {
+			if (!req.body.uri)
+				return res.status(400).json({ message: "Parameter 'uri' is missing" });
 
-		let result = await voiceCommander.play(req.body.song, req.body.artist, req.body.album, req.body.separator, req.body.onlyAddToQueue);
+			result = await voiceCommander.playByID(req.body.id, req.body.uri, req.body.onlyAddToQueue);
+		} else {
+			if (!req.body.song)
+				return res.status(400).json({ message: "Parameter 'song' is missing" });
+
+			result = await voiceCommander.play(req.body.song, req.body.artist, req.body.album, req.body.separator, req.body.onlyAddToQueue);
+		}
+
 		if (result.tracks.length > 0)
 			res.status(200).json(result);
 		else

@@ -31,6 +31,9 @@ body {
 
 .btn-primary.focus, .btn-primary:focus {
     background-color: #00b33e;
+}
+
+.btn-primary.focus, .btn-primary:focus, .form-control:focus {
     border-color: #00A339;
     box-shadow: 0 0 0 0.2rem rgba(0, 180, 60, 0.5);
 }

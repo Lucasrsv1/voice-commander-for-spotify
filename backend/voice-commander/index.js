@@ -154,13 +154,13 @@ function _filterTracks (tracks, song, artist, album, separator) {
 }
 
 /**
- * Identify what song the user ordered and play it
+ * Identify what song the user requested and play it
  * @param {string} song song's name from user's input
  * @param {string} artist artist's name from user's input
  * @param {string} album album's name from user's input
  * @param {string} separator term between song and artist in the user's input
  * @param {boolean} onlyAddToQueue add a song to the queue instead of playing it now
- * @returns {Promise<{ played: boolean, tracks: SpotifyApi.PlaylistTrackObject[]> }>} songs that match the command
+ * @returns {Promise<{ played: boolean, tracks: SpotifyApi.PlaylistTrackObject[] }>} songs that match the command
  */
 async function play (song, artist, album, separator, onlyAddToQueue) {
 	// Wait until all the playlists and tracks are loaded, if necessary
@@ -170,7 +170,7 @@ async function play (song, artist, album, separator, onlyAddToQueue) {
 	for (let playlist of availablePlaylists) {
 		possibleSongs = possibleSongs.concat(
 			_filterTracks(playlist.tracks, song, artist, album, separator).map(song => {
-				song.uri = playlist.uri;
+				song.track.uri = playlist.uri;
 				return song;
 			})
 		);
@@ -187,7 +187,8 @@ async function play (song, artist, album, separator, onlyAddToQueue) {
 					album: {
 						id: track.album.id,
 						name: track.album.name,
-						uri: track.album.uri
+						uri: track.album.uri,
+						images: track.album.images
 					},
 					artists: track.artists.map(a => ({
 						id: a.id,
@@ -199,7 +200,7 @@ async function play (song, artist, album, separator, onlyAddToQueue) {
 
 				possibleSongs = possibleSongs.concat(
 					_filterTracks(tracks, song, artist, album, separator).map(song => {
-						song.uri = song.track.album.uri;
+						song.track.uri = song.track.album.uri;
 						return song;
 					})
 				);
@@ -221,13 +222,13 @@ async function play (song, artist, album, separator, onlyAddToQueue) {
 
 	let played = false;
 	try {
-		// Play the track that is most likely to be the one the user ordered
+		// Play the track that is most likely to be the one the user requested
 		let songToPlay = possibleSongs.length > 0 ? possibleSongs[0] : null;
 		if (songToPlay) {
 			if (onlyAddToQueue)
 				await spotifyController.addTrackToQueue(songToPlay.track.id);
 			else
-				await spotifyController.playTrack(songToPlay.track.id, songToPlay.uri);
+				await spotifyController.playTrack(songToPlay.track.id, songToPlay.track.uri);
 
 			played = true;
 		}
@@ -235,11 +236,30 @@ async function play (song, artist, album, separator, onlyAddToQueue) {
 		console.error(error);
 	}
 
-	return {
-		played: played,
-		tracks: possibleSongs.map(song => song.track),
-		current_context: await spotifyController.getPlaybackState()
-	};
+	return { played, tracks: possibleSongs.map(song => song.track) };
 }
 
-module.exports = { loadAvailablePlaylists, play };
+/**
+ * Identify what song the user requested and play it
+ * @param {string} id song's ID
+ * @param {string} uri uri of the album or playlist that the track is part of
+ * @param {boolean} onlyAddToQueue add a song to the queue instead of playing it now
+ * @returns {Promise<{ played: boolean, tracks: SpotifyApi.PlaylistTrackObject[] }> } `true` if the song was played or added to the queue
+ */
+async function playByID (id, uri, onlyAddToQueue) {
+	let played = false;
+	try {
+		if (onlyAddToQueue)
+			await spotifyController.addTrackToQueue(id);
+		else
+			await spotifyController.playTrack(id, uri);
+
+		played = true;
+	} catch (error) {
+		console.error(error);
+	}
+
+	return { played, tracks: [{ id, uri }] }
+}
+
+module.exports = { loadAvailablePlaylists, play, playByID };

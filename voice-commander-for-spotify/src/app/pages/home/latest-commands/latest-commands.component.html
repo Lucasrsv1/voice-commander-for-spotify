@@ -3,7 +3,7 @@
 		<span>No commands yet</span>
 	</li>
 
-	<li *ngFor="let entry of logs" class="list-group-item" [ngClass]="className(entry)">
+	<li *ngFor="let entry of logs" class="list-group-item" [ngClass]="className(entry)" [title]="classTitle(entry)">
 		<span>{{ entry.text }}</span>
 		<button class="btn btn-sm btn-link float-right" (click)="runCmd(entry.text)">
 			<i class="fas fa-redo mr-1"></i> Run again

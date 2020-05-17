@@ -37,7 +37,7 @@ function getPlaylists () {
  * @returns {Promise<SpotifyApi.PlaylistTrackObject[]>}
  */
 async function getPlaylistTracks (playlistId) {
-	let fields = "limit,next,items(track(name,id,album(name,id),artists))";
+	let fields = "limit,next,items(track(name,id,album(name,id,images),artists))";
 	return paginationHandler(async (offset) => {
 		let tracks = await spotifyAuth.spotifyApi.getPlaylistTracks(playlistId, { offset, fields });
 

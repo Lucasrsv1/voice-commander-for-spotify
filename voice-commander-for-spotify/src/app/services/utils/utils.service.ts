@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+import { IImage } from 'src/app/models/IImage';
 import { UserService } from '../user/user.service';
 
 @Injectable({ providedIn: 'root' })
@@ -39,6 +40,10 @@ export class UtilsService {
 		}
 	}
 
+	handlerError (errorTitle: string = "Erro!", error: any): void  {
+		this.getErrorHandler(errorTitle)(error);
+	}
+
 	cloneObj<T> (obj: T, throwException: boolean = false): T {
 		try {
 			return JSON.parse(JSON.stringify(obj)) as T;
@@ -47,7 +52,7 @@ export class UtilsService {
 			if (throwException)
 				throw exception;
 			else
-				console.log(exception);
+				console.error(exception);
 
 			return null;
 		}
@@ -61,9 +66,23 @@ export class UtilsService {
 			if (throwException)
 				throw exception;
 			else
-				console.log(exception);
+				console.error(exception);
 
 			return null;
 		}
+	}
+
+	getImg (images: IImage[]): string {
+		let image = images[0];
+		for (let i = 0; i < images.length; i++) {
+			if (image.height <= 128) {
+				if (images[i].height <= 128 && images[i].height > image.height)
+					image = images[i];
+			} else if (images[i].height <= image.height) {
+				image = images[i];
+			}
+		}
+
+		return image ? image.url : "";
 	}
 }

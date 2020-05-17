@@ -1,0 +1,33 @@
+:host::ng-deep {
+	.list-group-item.list-group-item-dark {
+		color: #FFF;
+		background-color: #333;
+	}
+
+	.list-group-item.list-group-item-dark:hover {
+		color: #FFF;
+		background-color: #404040;
+	}
+
+	.list-group-item.list-group-item-dark.list-group-item-action.active {
+		background-color: #00b33e;
+    	border-color: #00b33e;
+	}
+
+	.list-group-item {
+		i {
+			color: #FFF;
+			line-height: 39px;
+		}
+
+		img {
+			height: 50px;
+			width: 50px;
+			object-fit: cover;
+		}
+
+		.float-right, .float-right span.float-left {
+			line-height: 50px;
+		}
+	}
+}

@@ -23,7 +23,7 @@
 		"cookie-parser": "^1.4.5",
 		"cors": "^2.8.5",
 		"express": "^4.17.1",
-		"node-hotkeys": "github:Lucasrsv1/node-hotkeys",
+		"node-hotkeys": "^1.0.0",
 		"querystring": "^0.2.0",
 		"request": "^2.88.2",
 		"spotify-web-api-node": "git+https://github.com/thattomperson/spotify-web-api-node.git",

@@ -36,6 +36,21 @@ export class LatestCommandsComponent implements OnInit {
 		};
 	}
 
+	classTitle (log: ICmdLog): string {
+		switch (log.status) {
+			case LogStatus.RUNNING:
+				return "Command running";
+			case LogStatus.SUCCESS:
+				return "Command executed successfully";
+			case LogStatus.ERROR:
+				return "Error executing command";
+			case LogStatus.AMBIGUOUS:
+				return "Command executed with ambiguities";
+			default:
+				return "Command not recognized";
+		}
+	}
+
 	runCmd (cmd: string): void {
 		this.voiceCommanderService.evaluate(cmd);
 	}

@@ -124,7 +124,7 @@ function loginCallback (req, res) {
 			res.redirect('/home');
 		}, error => {
 			log.error(error);
-			console.log('Something went wrong!', error);
+			console.error('Something went wrong!', error);
 			res.redirect('/login?' + querystring.stringify({ error: 'cannot_get_user' }));
 		});
 	});

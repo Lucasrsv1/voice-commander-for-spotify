@@ -1,0 +1,23 @@
+#prompt {
+	form {
+		width: calc(100% - 200px);
+
+		input.form-control {
+			width: calc(100% - 35px);
+		}
+	}
+
+	.btn.float-right {
+		width: 171px;
+	}
+}
+
+.red {
+	color: var(--red);
+}
+
+:host::ng-deep {
+	.list-group-item:hover {
+		cursor: pointer;
+	}
+}

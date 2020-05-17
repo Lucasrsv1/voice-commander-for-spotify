@@ -9,7 +9,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 @Component({
 	selector: 'app-playlists',
 	templateUrl: './playlists.component.html',
-	styleUrls: ['./playlists.component.scss']
+	styleUrls: ['./playlists.component.scss', '../list-group.scss']
 })
 export class PlaylistsComponent implements OnInit {
 	public loading: boolean = false;
@@ -42,17 +42,7 @@ export class PlaylistsComponent implements OnInit {
 	}
 
 	getImg (playlist: IPlaylist): string {
-		let image = playlist.images[0];
-		for (let i = 0; i < playlist.images.length; i++) {
-			if (image.height <= 128) {
-				if (playlist.images[i].height <= 128 && playlist.images[i].height > image.height)
-					image = playlist.images[i];
-			} else if (playlist.images[i].height <= image.height) {
-				image = playlist.images[i];
-			}
-		}
-
-		return image ? image.url : "";
+		return this.utils.getImg(playlist.images);
 	}
 
 	onSettingsChange (): void {
