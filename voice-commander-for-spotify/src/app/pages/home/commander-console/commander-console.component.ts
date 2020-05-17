@@ -85,6 +85,7 @@ export class CommanderConsoleComponent implements OnInit {
 					result = await this.playbackService.addTrackToQueue(this.tracks[index]).toPromise();
 
 				this.selectedTrack = index;
+				this.changeDetectorRef.detectChanges();
 			} catch (error) {
 				this.utils.handlerError("Error running command.", error);
 			}

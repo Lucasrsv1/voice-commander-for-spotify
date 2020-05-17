@@ -24,6 +24,9 @@ export class UtilsService {
 			if (err.status === 401)
 				return this.loginExpired();
 
+			if (err.status === 404)
+				return;
+
 			if (err.error) {
 				err = err.error;
 				if (err.statusCode === 401 && err.name === "WebapiError")
