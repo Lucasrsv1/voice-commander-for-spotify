@@ -59,6 +59,7 @@ async function _loadAvailableTracks () {
  * @returns {number} comparison coefficient
  */
 function _compareStrings (reference, input, removeParentheses) {
+	reference = reference || "";
 	let strictCoefficient = stringSimilarity.compareTwoStrings(reference.toLowerCase(), input);
 	if (!removeParentheses)
 		return strictCoefficient;
@@ -96,10 +97,10 @@ function _filterTracks (tracks, song, artist, album, separator) {
 		let noSeparatorSimilarity = -1;
 		let strictNoSeparatorSimilarity = -1;
 
-		if (album)
+		if (album && track.album)
 			albumSimilarity = _compareStrings(track.album.name, album);
 
-		if (artist) {
+		if (artist && track.artists) {
 			artistSimilarity = track.artists.reduce((coeficient, a) => {
 				let similarity = _compareStrings(a.name, artist);
 				return Math.max(coeficient, similarity);

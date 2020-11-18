@@ -41,10 +41,14 @@ async function getPlaylistTracks (playlistId) {
 	return paginationHandler(async (offset) => {
 		let tracks = await spotifyAuth.spotifyApi.getPlaylistTracks(playlistId, { offset, fields });
 
-		tracks.body.items = tracks.body.items.map(item => {
+		tracks.body.items = tracks.body.items.reduce((result, item) => {
+			if (!item.track)
+				return result;
+
 			item.track.artists = item.track.artists.map(a => ({ id: a.id, name: a.name }));
-			return item.track;
-		});
+			result.push(item);
+			return result;
+		}, []);
 
 		return tracks.body;
 	});
